@@ -1,8 +1,8 @@
 # APPEARANCE
-theme = dark:Gitlab Dark, light:GitLab Light
+theme = dark:Vercel,light:Dayfox
 # background-blur-radius = 20
-# background-opacity = 0.9
-font-family = BlexMonoNerdFontPropo,monospace
+# background-opacity = 0.85
+font-family = "Berkeley Mono"
 cursor-invert-fg-bg = true
 mouse-hide-while-typing = true
 cursor-style = block
