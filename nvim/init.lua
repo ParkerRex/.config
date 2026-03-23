@@ -5,6 +5,11 @@
 --]]
 vim.g.mapleader = ","
 
+-- GUI font (used by Neovide/Gui clients)
+vim.opt.guifont = "Berkeley Mono:h13"
+-- Colorschemes expect truecolor; set early to avoid "termguicolors must be set".
+vim.opt.termguicolors = true
+
 -- Load dotenv, if it exists
 require("custom.dotenv").eval(vim.fs.joinpath(vim.fn.stdpath "config", ".env")) ---@diagnostic disable-line: param-type-mismatch
 

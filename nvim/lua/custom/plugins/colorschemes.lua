@@ -2,24 +2,58 @@
 
 return {
   {
-    "EdenEast/nightfox.nvim",
+    "tiesen243/vercel.nvim",
     lazy = false,
     priority = 1000,
     config = function()
-      require("nightfox").setup({
-        options = {
-          -- Style can be "nightfox", "dayfox", "dawnfox", "duskfox", "nordfox", "terafox", "carbonfox"
-          styles = {
-            comments = "italic",
-            keywords = "bold",
-            types = "italic,bold",
-          }
-        }
+      local function apply_vercel_for_background()
+        local theme = vim.o.background == "dark" and "dark" or "light"
+        require("vercel").setup({
+          theme = theme,
+          transparent = false,
+          italics = {
+            comments = true,
+            keywords = true,
+            functions = true,
+            strings = true,
+            variables = true,
+            bufferline = false,
+          },
+          overrides = {},
+        })
+        vim.cmd.colorscheme "vercel"
+      end
+
+      local function set_background_from_system()
+        if vim.fn.has("mac") ~= 1 or vim.fn.executable("defaults") ~= 1 then
+          apply_vercel_for_background()
+          return
+        end
+
+        local output = vim.fn.system("defaults read -g AppleInterfaceStyle 2>/dev/null")
+        local next_bg = (type(output) == "string" and output:match("Dark")) and "dark" or "light"
+
+        if vim.o.background ~= next_bg then
+          vim.o.background = next_bg
+          return
+        end
+
+        apply_vercel_for_background()
+      end
+
+      set_background_from_system()
+
+      vim.api.nvim_create_autocmd({ "VimEnter", "FocusGained" }, {
+        callback = set_background_from_system,
       })
-      -- You can use nightfox for dark mode and dayfox for light mode
-      vim.cmd.colorscheme "nightfox"
+
+      vim.api.nvim_create_autocmd("OptionSet", {
+        pattern = "background",
+        callback = apply_vercel_for_background,
+      })
     end,
   },
+  "EdenEast/nightfox.nvim",
   {
     lazy = true,
     -- dir = "~/plugins/colorbuddy.nvim",
@@ -43,7 +77,6 @@ return {
   "cocopon/iceberg.vim",
   "kepano/flexoki-neovim",
   "ntk148v/komau.vim",
-  { "catppuccin/nvim", name = "catppuccin" },
   "uloco/bluloco.nvim",
   "LuRsT/austere.vim",
   "ricardoraposo/gruvbox-minor.nvim",

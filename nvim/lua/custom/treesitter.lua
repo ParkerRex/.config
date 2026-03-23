@@ -10,6 +10,8 @@ M.setup = function()
       "html",
       "css",
       "json",
+      "markdown",
+      "markdown_inline",
       "elixir",
       "heex",
       "lua",
