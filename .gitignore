@@ -2,11 +2,14 @@ trigger
 .wrangler
 .claude
 .gemini-clipboard
+amp
 builder
 codesandbox
 composer
 configstore
+flutter
 gcloud
+gws
 filezilla
 gh
 git
@@ -18,6 +21,8 @@ htop
 iterm2
 menus
 Microsoft\**
+karabiner/automatic_backups/*.json
+mole
 raycast
 stripe
 thefuck
