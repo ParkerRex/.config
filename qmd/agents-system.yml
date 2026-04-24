@@ -1,0 +1,6 @@
+collections:
+  repo-docs:
+    path: /Users/parkerrex/.agents
+    pattern: "**/*.md"
+    context:
+      "": Parker assistant operating system docs, decisions, workflows, plans, and deliverables
