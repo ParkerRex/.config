@@ -2,31 +2,25 @@
 
 return {
   {
-    "tiesen243/vercel.nvim",
+    "kepano/flexoki-neovim",
     lazy = false,
     priority = 1000,
+    dependencies = {
+      { "catppuccin/nvim", name = "catppuccin" },
+    },
     config = function()
-      local function apply_vercel_for_background()
-        local theme = vim.o.background == "dark" and "dark" or "light"
-        require("vercel").setup({
-          theme = theme,
-          transparent = false,
-          italics = {
-            comments = true,
-            keywords = true,
-            functions = true,
-            strings = true,
-            variables = true,
-            bufferline = false,
-          },
-          overrides = {},
-        })
-        vim.cmd.colorscheme "vercel"
+      local color_scheme_by_background = {
+        dark = "flexoki-dark",
+        light = "catppuccin-macchiato",
+      }
+
+      local function apply_colorscheme_for_background()
+        vim.cmd.colorscheme(color_scheme_by_background[vim.o.background])
       end
 
       local function set_background_from_system()
         if vim.fn.has("mac") ~= 1 or vim.fn.executable("defaults") ~= 1 then
-          apply_vercel_for_background()
+          apply_colorscheme_for_background()
           return
         end
 
@@ -38,7 +32,7 @@ return {
           return
         end
 
-        apply_vercel_for_background()
+        apply_colorscheme_for_background()
       end
 
       set_background_from_system()
@@ -49,10 +43,11 @@ return {
 
       vim.api.nvim_create_autocmd("OptionSet", {
         pattern = "background",
-        callback = apply_vercel_for_background,
+        callback = apply_colorscheme_for_background,
       })
     end,
   },
+  "tiesen243/vercel.nvim",
   "EdenEast/nightfox.nvim",
   {
     lazy = true,
@@ -75,7 +70,6 @@ return {
   "RRethy/base16-nvim",
   "xero/miasma.nvim",
   "cocopon/iceberg.vim",
-  "kepano/flexoki-neovim",
   "ntk148v/komau.vim",
   "uloco/bluloco.nvim",
   "LuRsT/austere.vim",

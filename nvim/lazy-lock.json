@@ -7,6 +7,7 @@
   "avante.nvim": { "branch": "main", "commit": "e89eb79abf5754645e20aa6074da10ed20bba33c" },
   "base16-nvim": { "branch": "master", "commit": "5f140bdbb07c0767f0785c71407330c8c96e9bcf" },
   "bluloco.nvim": { "branch": "main", "commit": "ecbb86a3ac75f21e361595d9468e9fa017b7aa58" },
+  "catppuccin": { "branch": "main", "commit": "426dbebe06b5c69fd846ceb17b42e12f890aedf1" },
   "cmp-buffer": { "branch": "main", "commit": "b74fab3656eea9de20a9b8116afa3cfc4ec09657" },
   "cmp-nvim-lsp": { "branch": "main", "commit": "cbc7b02bb99fae35cb42f514762b89b5126651ef" },
   "cmp-path": { "branch": "main", "commit": "c642487086dbd9a93160e1679a1327be111cbc25" },
