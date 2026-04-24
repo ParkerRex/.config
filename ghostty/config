@@ -1,5 +1,5 @@
 # APPEARANCE
-theme = dark:flexoki-dark,light:catppuccin-macchiato
+theme = dark:Flexoki Dark,light:Catppuccin Macchiato
 # background-blur-radius = 10
 # background-opacity = 0.95
 font-family = "Berkeley Mono"

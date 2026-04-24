@@ -1,4 +1,8 @@
 trigger
+.DS_Store
+.env
+*.env
+*.bak
 .wrangler
 .claude
 .gemini-clipboard
@@ -17,6 +21,7 @@ github-copilot
 glab-cli
 graphite
 gtk-2.0
+ghostty/themes
 htop
 iterm2
 menus
