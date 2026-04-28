@@ -5,6 +5,8 @@ tap "homebrew/core"
 brew "readline"
 # Official Amazon AWS command-line interface
 brew "awscli"
+# Cat clone with syntax highlighting, used by fzf previews
+brew "bat"
 # Cross-platform make
 brew "cmake"
 # Simple, fast and user-friendly alternative to find
@@ -13,12 +15,20 @@ brew "fd"
 brew "fzf"
 # GNU compiler collection
 brew "gcc"
+# Distributed revision control system
+brew "git"
+# Open source programming language to build simple/reliable/efficient software
+brew "go"
+# GNU implementation of the famous stream editor
+brew "gnu-sed"
 # Lua language server
 brew "lua-language-server"
 # Fast, highly customisable system info script
 brew "neofetch"
 # Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
+# Manage multiple Node.js versions
+brew "nvm"
 # Platform built on V8 to build network applications
 brew "node"
 # Python version management
@@ -89,6 +99,8 @@ cask "obsidian"
 cask "spotify"
 # Keyboard customizer
 cask "karabiner-elements"
+# Move and resize windows with keyboard shortcuts
+cask "rectangle"
 # Open-source code editor
 cask "visual-studio-code"
 # Multimedia player

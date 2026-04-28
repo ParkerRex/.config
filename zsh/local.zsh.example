@@ -1,0 +1,12 @@
+# Copy to ~/.config/zsh/local.zsh for machine-local shell values.
+# This file is intentionally only a template; zsh/local.zsh is gitignored.
+
+# Secrets
+# export GEMINI_API_KEY="..."
+# export THINGS_AUTH_TOKEN="..."
+# export ADOBE_ILLUSTRATOR_MCP_BEARER_TOKEN="..."
+
+# Machine-specific PATH additions
+# export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
+# export ANDROID_HOME="$HOME/Library/Android/sdk"
+# export PATH="$PATH:$ANDROID_HOME/platform-tools"

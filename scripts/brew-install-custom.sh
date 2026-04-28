@@ -1,17 +1,76 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
-# Get the absolute path of the directory where the script is located
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-. $SCRIPT_DIR/utils.sh
+# shellcheck source=./scripts/utils.sh
+. "$SCRIPT_DIR/utils.sh"
 
-# Paths to the custom formulae and casks directories
 FORMULAE_DIR="$SCRIPT_DIR/../homebrew/custom-formulae"
 CASKS_DIR="$SCRIPT_DIR/../homebrew/custom-casks"
+BREWFILE="$SCRIPT_DIR/../homebrew/Brewfile"
 
-install_custom() { # Function to install custom formulas and casks
-    package_name=$1
-    is_cask=$2
+INSTALL_BUNDLE=true
+INSTALL_CUSTOM=false
+YES=false
+
+usage() {
+    cat <<EOF
+Usage: $0 [--yes] [--bundle-only] [--custom] [--custom-only] [--check]
+
+Installs the Homebrew bundle used by this dotfiles repo.
+
+Options:
+  --yes          Run non-interactively.
+  --bundle-only Install only homebrew/Brewfile. This is the default.
+  --custom      Also install local formulae/casks from homebrew/custom-*.
+  --custom-only Install only local formulae/casks.
+  --check       Check whether the Brewfile is satisfied, without installing.
+EOF
+}
+
+while [ "$#" -gt 0 ]; do
+    case "$1" in
+    --yes|-y)
+        YES=true
+        ;;
+    --bundle-only)
+        INSTALL_BUNDLE=true
+        INSTALL_CUSTOM=false
+        ;;
+    --custom)
+        INSTALL_CUSTOM=true
+        ;;
+    --custom-only)
+        INSTALL_BUNDLE=false
+        INSTALL_CUSTOM=true
+        ;;
+    --check)
+        HOMEBREW_NO_AUTO_UPDATE=1 brew bundle check --file="$BREWFILE"
+        exit $?
+        ;;
+    --help|-h)
+        usage
+        exit 0
+        ;;
+    *)
+        die "Unknown argument: $1"
+        ;;
+    esac
+    shift
+done
+
+load_brew_shellenv() {
+    if [ -x /opt/homebrew/bin/brew ]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+    elif [ -x /usr/local/bin/brew ]; then
+        eval "$(/usr/local/bin/brew shellenv)"
+    fi
+}
+
+install_custom() {
+    local package_name=$1
+    local is_cask=$2
 
     if $is_cask && [ -f "$CASKS_DIR/$package_name.rb" ]; then
         info "Installing custom cask: $package_name"
@@ -20,73 +79,69 @@ install_custom() { # Function to install custom formulas and casks
         info "Installing custom formula: $package_name"
         brew install "$FORMULAE_DIR/$package_name.rb"
     else
-        error "File not found for package: $package_name"
-        exit 1
+        die "File not found for package: $package_name"
     fi
 }
 
 install_custom_formulae() {
-    # Get the list of custom formulae from FORMULAe_DIR
-    custom_formulae=()
-    if [ -d "$FORMULAE_DIR" ]; then
-        for file in "$FORMULAE_DIR"/*.rb; do
-            [ -e "$file" ] || continue
-            custom_formulae+=("$(basename "${file%.rb}")")
-        done
+    if [ ! -d "$FORMULAE_DIR" ]; then
+        return 0
     fi
 
-    for formula in "${custom_formulae[@]}"; do
-        install_custom "$formula" false
+    local file
+    for file in "$FORMULAE_DIR"/*.rb; do
+        [ -e "$file" ] || continue
+        install_custom "$(basename "${file%.rb}")" false
     done
 }
 
 install_custom_casks() {
-    # Get the list of custom casks from CASKS_DIR
-    custom_casks=()
-    if [ -d "$CASKS_DIR" ]; then
-        for file in "$CASKS_DIR"/*.rb; do
-            [ -e "$file" ] || continue
-            custom_casks+=("$(basename "${file%.rb}")")
-        done
+    if [ ! -d "$CASKS_DIR" ]; then
+        return 0
     fi
 
-    for cask in "${custom_casks[@]}"; do
-        install_custom "$cask" true
+    local file
+    for file in "$CASKS_DIR"/*.rb; do
+        [ -e "$file" ] || continue
+        install_custom "$(basename "${file%.rb}")" true
     done
 }
 
 run_brew_bundle() {
-    brewfile="$SCRIPT_DIR/../homebrew/Brewfile"
-    if [ -f $brewfile ]; then
-        # Run `brew bundle check`
-        local check_output
-        check_output=$(brew bundle check --file="$brewfile" 2>&1)
+    if [ ! -f "$BREWFILE" ]; then
+        die "Brewfile not found: $BREWFILE"
+    fi
 
-        # Check if "The Brewfile's dependencies are satisfied." is contained in the output
-        if echo "$check_output" | grep -q "The Brewfile's dependencies are satisfied."; then
-            warning "The Brewfile's dependencies are already satisfied."
-        else
-            info "Satisfying missing dependencies with 'brew bundle install'..."
-            brew bundle install --file="$brewfile"
-        fi
+    export HOMEBREW_NO_AUTO_UPDATE="${HOMEBREW_NO_AUTO_UPDATE:-1}"
+    if brew bundle check --file="$BREWFILE"; then
+        success "Brewfile dependencies are already satisfied"
     else
-        error "Brewfile not found"
-        return 1
+        info "Installing missing Brewfile dependencies..."
+        brew bundle install --file="$BREWFILE"
     fi
 }
 
-if [ "$(basename "$0")" = "$(basename "${BASH_SOURCE[0]}")" ]; then
-    # Check if Homebrew is installed
-    if ! command -v brew &>/dev/null; then
-        error "Homebrew is not installed. Please install Homebrew first."
-        exit 1
+if ! command -v brew >/dev/null 2>&1; then
+    load_brew_shellenv
+fi
+
+if ! command -v brew >/dev/null 2>&1; then
+    die "Homebrew is not installed. Run ./scripts/prerequisites.sh first."
+fi
+
+if $INSTALL_CUSTOM && ! $YES; then
+    warning "Custom formulae/casks are legacy escape hatches and can be slow."
+    read -r -p "Install custom formulae/casks too? [y/N] " install_custom_answer
+    if [[ ! "$install_custom_answer" =~ ^[Yy]$ ]]; then
+        INSTALL_CUSTOM=false
     fi
+fi
+
+if $INSTALL_CUSTOM; then
     install_custom_formulae
     install_custom_casks
+fi
 
-    read -p "Install Brew bundle? [y/n] " install_bundle
-
-    if [[ "$install_bundle" == "y" ]]; then
-        run_brew_bundle
-    fi
+if $INSTALL_BUNDLE; then
+    run_brew_bundle
 fi

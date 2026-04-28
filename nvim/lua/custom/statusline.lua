@@ -33,7 +33,8 @@ M.setup = function()
         end)
       )
       table.insert(segments, function()
-        local task_count = #require("misery.scheduler").tasks
+        local ok, scheduler = pcall(require, "misery.scheduler")
+        local task_count = ok and #scheduler.tasks or 0
         if task_count == 0 then
           return ""
         else

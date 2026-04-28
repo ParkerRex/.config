@@ -3,8 +3,8 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-HOOKS_DIR="$SCRIPT_DIR/../.githooks"
 
+# shellcheck source=./scripts/utils.sh
 . "$SCRIPT_DIR/utils.sh"
 
 usage() {

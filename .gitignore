@@ -3,6 +3,11 @@ trigger
 .env
 *.env
 *.bak
+backups/
+zsh/local.zsh
+*.local
+.zshrc.local
+nvim.log
 .wrangler
 .claude
 .gemini-clipboard
