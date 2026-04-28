@@ -7,12 +7,18 @@ brew "readline"
 brew "awscli"
 # Cross-platform make
 brew "cmake"
+# Simple, fast and user-friendly alternative to find
+brew "fd"
 # Command-line fuzzy finder written in Go
 brew "fzf"
 # GNU compiler collection
 brew "gcc"
+# Lua language server
+brew "lua-language-server"
 # Fast, highly customisable system info script
 brew "neofetch"
+# Ambitious Vim-fork focused on extensibility and agility
+brew "neovim"
 # Platform built on V8 to build network applications
 brew "node"
 # Python version management
@@ -45,6 +51,8 @@ brew "openssl@3", link: false
 brew "postgresql@14"
 # Command-line interface for SQLite
 brew "sqlite"
+# Opinionated Lua code formatter
+brew "stylua"
 # PDF rendering library (based on the xpdf-3.0 code base)
 brew "poppler"
 # Modern, maintained replacement for ls
@@ -60,7 +68,7 @@ cask "brave-browser"
 # Universal database tool and SQL client
 cask "dbeaver-community"
 # App to build and share containerized applications and microservices
-cask "docker"
+cask "docker-desktop"
 # Developer targeted fonts with a high number of glyphs
 cask "font-hack-nerd-font"
 # Developer targeted fonts with a high number of glyphs
@@ -88,7 +96,7 @@ cask "vlc"
 # App that enables mouse-free UI interaction
 cask "shortcat"
 # Software for Logitech devices
-cask "logi-options-plus"
+cask "logi-options+"
 vscode "eamodio.gitlens"
 vscode "esbenp.prettier-vscode"
 vscode "mechatroner.rainbow-csv"
