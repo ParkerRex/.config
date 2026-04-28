@@ -23,9 +23,10 @@ One-command macOS bootstrap for this dotfiles repo.
 Default behavior:
   1. Verify Command Line Tools and Homebrew.
   2. Install homebrew/Brewfile.
-  3. Create managed symlinks, backing up conflicts first.
-  4. Try a headless lazy.nvim plugin sync.
-  5. Run smoke checks.
+  3. Install private fonts when present.
+  4. Create managed symlinks, backing up conflicts first.
+  5. Try a headless lazy.nvim plugin sync.
+  6. Run smoke checks.
 
 Options:
   --yes                 Non-interactive mode.
@@ -146,6 +147,7 @@ if $RUN_BREW; then
 fi
 
 run_step "Creating local-only config placeholders..." setup_local_files
+run_step "Installing private fonts..." "$SCRIPT_DIR/install-private-fonts.sh"
 run_step "Creating managed symlinks..." "$SCRIPT_DIR/symlinks.sh" --create
 
 if $RUN_BREW; then

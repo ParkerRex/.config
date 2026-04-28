@@ -19,7 +19,7 @@ cd ~/.config
 
 That command installs Homebrew dependencies, creates safe symlinks, backs up
 conflicting existing files, creates a local-only shell override file, attempts a
-Neovim plugin sync, and runs smoke checks.
+private font install, attempts a Neovim plugin sync, and runs smoke checks.
 
 For the full operator/agent flow, see
 [`docs/fresh-machine-runbook.md`](docs/fresh-machine-runbook.md).
@@ -57,7 +57,9 @@ tracked dotfiles.
 ## What This Repo Owns
 
 - Shell: `zsh/`, `starship/`
-- Editors: `nvim/`, `vim/`
+- Editors: `nvim/`, `vim/`, `vscode/`, `cursor/`, `zed/`
+- Fonts: `fonts/` tracks install instructions; licensed binaries stay in
+  gitignored `fonts/private/`
 - Terminal + multiplexing: `ghostty/`, `kitty/`, `tmux/`
 - Window management: `karabiner/`, `rectangle/`
 - Package/bootstrap scripts: `homebrew/`, `scripts/`, `macos/`

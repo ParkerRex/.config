@@ -39,5 +39,7 @@ thefuck
 uv
 wireshark
 yarn
-zed
+zed/*
+!zed/settings.json
 fossil.db
+fonts/private/

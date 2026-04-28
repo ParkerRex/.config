@@ -36,7 +36,8 @@ There is no canonical root `install.sh` anymore.
 - `zsh/`: shell startup, aliases, completions
 - `starship/`: prompt configuration
 - `ghostty/`, `kitty/`, `tmux/`: terminal emulator and session management
-- `nvim/`, `vim/`: editor configuration
+- `nvim/`, `vim/`, `vscode/`, `cursor/`, `zed/`: editor configuration
+- `fonts/`: font install docs and private-font staging conventions
 
 ### macOS interaction layer
 
@@ -51,7 +52,7 @@ There is no canonical root `install.sh` anymore.
 
 ### App-specific configuration
 
-- `ranger/`, `dbeaver/`, `cursor/`, `iterm/`, `opencode/`, `amp/`, `eza/`
+- `ranger/`, `dbeaver/`, `iterm/`, `opencode/`, `amp/`, `eza/`
 - These are usually isolated. Avoid cross-directory refactors unless the bootstrap or symlink contract changed.
 
 ### Likely machine-local or high-churn state
@@ -80,7 +81,8 @@ When debugging behavior, search `nvim/plugin/`, `nvim/after/`, and `nvim/lua/cus
 - If a change affects the machine bootstrap flow, update `README.md` and the relevant docs in `docs/`.
 - If a change affects linked config paths, update `symlinks.conf`.
 - If a change only affects one app, keep the diff inside that app directory whenever possible.
-- Avoid bundling generated backups, secrets, or token files into generic cleanup commits.
+- Avoid bundling generated backups, secrets, token files, or licensed font
+  binaries into generic cleanup commits.
 
 ## Agent Notes
 

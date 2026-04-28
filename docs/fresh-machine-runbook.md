@@ -25,6 +25,7 @@ Expected result:
 - `homebrew/Brewfile` dependencies are installed.
 - `~/.zshenv` and `~/.zshrc` point at this repo.
 - `~/.config/zsh/local.zsh` exists for secrets and machine-local paths.
+- Private fonts are installed when present under `fonts/private/`.
 - Neovim plugins are attempted with `Lazy sync`.
 - `./scripts/check-shell.sh` passes or prints concrete next steps.
 
@@ -60,6 +61,12 @@ Run only symlink creation:
 
 ```bash
 ~/.config/scripts/symlinks.sh --create
+```
+
+Install only private fonts:
+
+```bash
+~/.config/scripts/install-private-fonts.sh
 ```
 
 Run only checks:
@@ -165,5 +172,5 @@ existing `~/.zshrc`, `~/.vimrc`, or app config.
    nvim --headless -u NONE +qa
    ```
 
-5. Never commit secrets, `zsh/local.zsh`, `.env`, app caches, logs, or backup
-   directories.
+5. Never commit secrets, `zsh/local.zsh`, `.env`, licensed font binaries, app
+   caches, logs, or backup directories.

@@ -1,0 +1,36 @@
+// Place your key bindings in this file to override the defaults
+[
+	{
+		"key": "cmd+l",
+		"command": "-expandLineSelection",
+		"when": "textInputFocus"
+	},
+	{
+		"key": "cmd+l",
+		"command": "workbench.action.toggleAuxiliaryBar"
+	},
+	{
+		"key": "ctrl+h",
+		"command": "workbench.action.nextEditor"
+	},
+	{
+		"key": "ctrl+l",
+		"command": "workbench.action.previousEditor"
+	},
+	{
+		"key": "alt+h",
+		"command": "workbench.action.nextEditorInGroup"
+	},
+	{
+		"key": "alt+l",
+		"command": "workbench.action.previousEditorInGroup"
+    },
+    {
+        "key": "shift+enter",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "\\\r\n"
+        },
+        "when": "terminalFocus"
+	}
+]
