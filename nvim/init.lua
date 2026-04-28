@@ -15,7 +15,7 @@ require("custom.dotenv").eval(vim.fs.joinpath(vim.fn.stdpath "config", ".env")) 
 
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 if not vim.uv.fs_stat(lazypath) then
-	vim.fn.system {
+	local output = vim.fn.system {
 		"git",
 		"clone",
 		"--filter=blob:none",
@@ -23,6 +23,9 @@ if not vim.uv.fs_stat(lazypath) then
 		"--branch=stable",
 		lazypath,
 	}
+	if vim.v.shell_error ~= 0 then
+		error("Failed to install lazy.nvim:\n" .. output)
+	end
 end
 
 -- Add lazy to the `runtimepath`, this allows us to `require` it.
