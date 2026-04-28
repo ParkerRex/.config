@@ -8,11 +8,11 @@ local function parse_env_file(filepath)
   local env = {}
 
   -- Read file line by line
-  for line in file:lines() do
+  for raw_line in file:lines() do
     -- Skip empty lines and comments
-    if line:match "^%s*[^#]" then
+    if raw_line:match "^%s*[^#]" then
       -- Remove leading/trailing whitespace
-      line = line:match "^%s*(.-)%s*$"
+      local line = raw_line:match "^%s*(.-)%s*$"
 
       -- Remove optional "export" keyword
       line = line:gsub("^export%s+", "")
